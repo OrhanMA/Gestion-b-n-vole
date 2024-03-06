@@ -2,38 +2,43 @@
 
 require_once __DIR__ . '../../../classes/CsvManager.php';
 
-// print_r($_POST);
-
 if (!empty($_POST)) {
   if (empty($_POST['code']) == true) {
-    header('Location: /gestion-benevole/benevole/connexion/failure.php');
+    // si aucun code n'est soumis dans le formulaire
+    header('Location: /gestion-benevole/benevole/connexion/failure.php?message="code is empty');
     exit;
   } else {
-    $code = $_POST['code'];
+    $code = htmlspecialchars($_POST['code']);
+    //récupération des bénévoles dans le csv
     $csv = new CsvManager('./../../csv/benevoles.csv');
     $file = $csv->openCsv();
     $csv->readCsv();
     $benevoles = $csv->readFromCsv();
 
+    //variable vide pour y mettre le bénévole si on le trouve par la suite
+    $user_found;
     foreach ($benevoles as $benevole) {
-      if ($benevole[0] == $code) {
-        print_r('user found');
-        print_r($benevole);
-
-        header("Location: /gestion-benevole/benevole/index.php?code=$code");
-        exit;
-      } else {
-        print_r('no user found');
-        header('Location: /gestion-benevole/benevole/connexion/failure.php');
-        exit;
+      // ajouter la bénévole dans la variable $user_found si son ID correspond au code soumis
+      $benevole_id = $benevole[0];
+      if ($benevole_id == $code) {
+        $user_found = $benevole;
       }
     }
-
     $csv->closeCsv($file);
-    exit;
+    // redirige selon si user trouvé ou pas
+    if (!empty($user_found)) {
+      print_r($user_found);
+      header("Location: /gestion-benevole/benevole/index.php?code=$code");
+      exit;
+    } else {
+      print_r('no user found');
+      header('Location: /gestion-benevole/benevole/connexion/failure.php?message="Invalid credentials"');
+      exit;
+    }
   }
 } else {
-  header('Location: /gestion-benevole/benevole/connexion/failure.php');
+  // si post est empty, renvoi à la page d'erreur
+  header('Location: /gestion-benevole/benevole/connexion/failure.php?message="post is empty"');
   exit;
 }
 

@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="../../styles/style.css">
 </head>
 <body>
+
+<?php
+
+
+?>
   <h1>Page d'inscription bénévole</h1>
   <p>Remplissez le formulaire afin de créer votre profil de bénévole.</p>
   <form id="form" action="./sign_up.php" method="post">
@@ -184,5 +189,6 @@
   }
   
   </script>
+
 </body>
 </html>

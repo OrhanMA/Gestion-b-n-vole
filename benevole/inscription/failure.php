@@ -6,17 +6,17 @@
   <title>Échec de l'inscription</title>
 </head>
 <body>
-  <h1>Échec de l'inscription</h1>
-  <?php
 
-  // afficher un message d'erreur
-  // proposer un retour sur la page inscription bénévole ou page d'accueil
-  
-  ?>
+<?php
+
+
+?>
+  <h1>Échec de l'inscription</h1>
   <p>Un problème s'est produit lors de la création de votre profil bénévole.</p>
   <div>
     <a href="./index.php">Réesayer</a>
     <a href="../../index.php">Page d'accueil</a>
   </div>
+
 </body>
 </html>

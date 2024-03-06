@@ -8,15 +8,11 @@
 <body>
   <h1>Page de connexion bénévole</h1>
   <?php
-
   // mettre un form avec juste l'ID du bénévole à entrer
   // Au submit cherche avec PHP si il y a bien un bénévole
   
   // pas de bénévole -> redirection connexion error
   // bénévole -> redirection page bénévole
-  
-
-
   ?>
 
   <form action="./sign_in.php" method="post">
@@ -32,7 +28,7 @@
     const code =  urlParams.get('code');
     const input = document.querySelector('#code');
     if(input && code) input.value = code;
-
   </script>
+
 </body>
 </html>

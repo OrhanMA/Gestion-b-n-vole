@@ -8,6 +8,27 @@ class CsvManager
     $this->pathToCsv = $pathToCsv;
   }
 
+  function getBenevoleByID($id, $csvPath)
+  {
+    $csv = new CsvManager($csvPath);
+    $file = $csv->openCsv();
+    $csv->readCsv();
+    $benevoles = $csv->readFromCsv();
+
+
+    foreach ($benevoles as $benevole) {
+      // ajouter la bénévole dans la variable $user_found si son ID correspond au code soumis
+      $benevole_id = $benevole[0];
+      if ($benevole_id == $id) {
+        $user_found = $benevole;
+        $csv->closeCsv($file);
+        return $user_found;
+      }
+    }
+    $csv->closeCsv($file);
+    return null;
+  }
+
   function readCsv()
   {
     return fopen($this->pathToCsv, 'r');

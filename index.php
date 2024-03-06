@@ -17,6 +17,7 @@ Inscrivez-vous dès maintenant pour rejoindre notre communauté de bénévoles d
 Rejoignez-nous dès aujourd'hui et découvrez comment vous pouvez avoir un impact positif en tant que bénévole ou en trouvant les bénévoles adaptés à vos missions !</p>
 <a href="./benevole/inscription/index.php?step=1">Cliquez ici pour vous inscrire</a>
 <a href="./benevole/connexion/index.php">Cliquez ici pour vous connecter à votre espace bénévole</a>
-<a href="./administrateur/connexion.php">Cliquez ici pour vous connecter en tant qu'administrateur</a>
+<a href="./administrateur/connexion/index.php">Cliquez ici pour vous connecter en tant qu'administrateur</a>
 </body>
 </html>
+

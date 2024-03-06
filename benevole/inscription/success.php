@@ -7,15 +7,6 @@
 </head>
 <body>
   <h1>Confirmation de l'inscription</h1>
-  <?php
-
-  // envoyer dans les paramètres d'url l'id du nouvel utilisateur
-  // récupérer l'ID du user passé en paramètre d'url
-  // afficher l'ID pour que l'utilisateur puisse le noter
-  // proposer une redirection vers la page connexion bénévole ou page d'accueil
-  
-  ?>
-
   <p>Vous avez bien été inscrit votre code est: <span style="font-weight: bold;"></span>. Notez le bien!</p>
 
   <div>

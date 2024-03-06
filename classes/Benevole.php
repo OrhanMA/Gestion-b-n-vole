@@ -4,11 +4,12 @@ require_once __DIR__ . '/UUID.php';
 
 class Benevole
 {
-  public $id, $first_name, $last_name, $age, $genre, $phone, $email, $region, $dispo_jour, $dispo_horaire, $poste, $message;
+  public $id, $first_name, $last_name, $age, $genre, $phone, $email, $region, $dispo_jour, $dispo_horaire, $poste, $message, $date_inscription;
 
   public function __construct($first_name, $last_name, $age, $genre, $phone, $email, $region, $dispo_jour, $dispo_horaire, $poste, $message)
   {
     $this->id = UUID::v4();
+    $this->date_inscription = date("d-m-Y");
     $this->first_name = $first_name;
     $this->last_name = $last_name;
     $this->age = $age;
@@ -22,6 +23,10 @@ class Benevole
     $this->message = $message;
   }
 
+  public function get_date_inscription()
+  {
+    return $this->date_inscription;
+  }
 
   public function get_id()
   {
