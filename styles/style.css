@@ -32,6 +32,19 @@ input[type="submit"] {
   padding: 0.5rem 1rem;
 }
 
+.content-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100vw;
+  justify-content: space-evenly;
+}
+
+.content-container > * {
+  padding: 5rem;
+  width: 50%;
+}
+
 @media screen and (min-width: 768px) {
   form {
     width: 80%;

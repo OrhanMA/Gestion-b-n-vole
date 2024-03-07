@@ -89,4 +89,29 @@ class CsvManager
   {
     $this->pathToCsv = $path;
   }
+
+  public function update_benevole_missions($id, $new_mission, $csv_path)
+  {
+    $csv = new CsvManager($csv_path);
+    $file = $csv->readCsv();
+
+    while ($benevole = fgetcsv($file)) {
+      if ($benevole[0] == $id) {
+        // print_r($benevole);
+        // print_r($benevole);
+
+        // isset et empty sur tableau
+        print_r($benevole);
+        // trouver index 
+        if (!in_array($new_mission, json_decode($benevole[13]))) {
+          $benevole[13] = $new_mission;
+          print_r($benevole);
+        } else {
+          // return erreur deja dedans
+        }
+      }
+    }
+  }
+
+
 }

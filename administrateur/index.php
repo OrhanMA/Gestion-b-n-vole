@@ -53,51 +53,81 @@ if (!empty($_SESSION)) {
 
 ?>
   <h1>Page administrateur</h1>
+  <div class="content-container">
+    <div>
+      <p>Liste des bénévoles</p>
+      <ul class="admin-benevole-list">
+        <?php
 
-  <form action="./add_event.php" method="post">
-    <span style="color:red; font-weight:bold;">
-      <?php
-      if (!empty($_GET['message']) && isset($_GET['message'])) {
-        $message = $_GET['message'];
-        echo "$message";
-      }
-      ?>
-    </span>
-    <caption>Remplissez ce formulaire pour ajouter un évènement</caption>
-    <div class="form_field_container">
-      <label for="titre">Titre</label>
-      <input type="text" name="titre" id="titre">
+        require_once __DIR__ . './../classes/CsvManager.php';
+
+        $csv = new CsvManager('./../csv/benevoles.csv');
+        $file = $csv->openCsv();
+        $benevoles = $csv->readFromCsv();
+        // print_r($benevoles);
+        foreach ($benevoles as $key => $value) {
+          # code...
+          echo "
+          <li>
+            <div>
+              <p>$value[1]</p>
+              <p>$value[2]</p>
+            </div>
+            <a href='http://localhost:8888/gestion-benevole/administrateur/missions/assignation.php?benevole=$value[0]'>Assigner une mission</a>
+          </li>";
+        }
+
+
+
+        ?>
+      </ul>
     </div>
-    <div class="form_field_container">
-      <label for="region">Région</label>
-      <select required name="region" id="region">
-          <option value="Auvergne-Rhône-Alpes">Auvergne-Rhône-Alpes</option>
-          <option value="Bourgogne-Franche-Comté">Bourgogne-Franche-Comté</option>
-          <option value="Bretagne">Bretagne</option>
-          <option value="Centre-Val-de-loire">Centre-Val de Loire</option>
-          <option value="Corse">Corse</option>
-          <option value="Grand-Est">Grand Est</option>
-          <option value="Hauts-de-France">Hauts-de-France</option>
-          <option value="Île-de-France">Île-de-France</option>
-          <option value="Normandie">Normandie</option>
-          <option value="Nouvelle-Aquitaine">Nouvelle-Aquitaine</option>
-          <option value="Occitanie">Occitanie</option>
-          <option value="Pays-de-la-loire">Pays de la Loire</option>
-          <option value="Provence-Alpes-Côte-d-azure">Provence Alpes Côte d'azure</option>
-        </select>
-    </div>
-    <div class="form_field_container">
-      <label for="date">Date</label>
-      <input required type="date" name="date" id="date" value="<?php $date = date('Y-m-d');
-      echo "$date"; ?>" min="<?php
-        $date = date('Y-m-d');
-        echo "$date"; ?>">
-    </div>
-    <div class="form_field_container">
-      <label for="description">Description</label>
-      <textarea name="description" id="description" cols="30" rows="10"></textarea>
-    </div>
-    <input type="submit" value="Ajouter l'évènement">
-  </form>
+  
+    <form action="./add_event.php" method="post">
+      <span style="color:red; font-weight:bold;">
+        <?php
+        if (!empty($_GET['message']) && isset($_GET['message'])) {
+          $message = $_GET['message'];
+          echo "$message";
+        }
+        ?>
+      </span>
+      <caption>Remplissez ce formulaire pour ajouter un évènement</caption>
+      <div class="form_field_container">
+        <label for="titre">Titre</label>
+        <input type="text" name="titre" id="titre">
+      </div>
+      <div class="form_field_container">
+        <label for="region">Région</label>
+        <select required name="region" id="region">
+            <option value="Auvergne-Rhône-Alpes">Auvergne-Rhône-Alpes</option>
+            <option value="Bourgogne-Franche-Comté">Bourgogne-Franche-Comté</option>
+            <option value="Bretagne">Bretagne</option>
+            <option value="Centre-Val-de-loire">Centre-Val de Loire</option>
+            <option value="Corse">Corse</option>
+            <option value="Grand-Est">Grand Est</option>
+            <option value="Hauts-de-France">Hauts-de-France</option>
+            <option value="Île-de-France">Île-de-France</option>
+            <option value="Normandie">Normandie</option>
+            <option value="Nouvelle-Aquitaine">Nouvelle-Aquitaine</option>
+            <option value="Occitanie">Occitanie</option>
+            <option value="Pays-de-la-loire">Pays de la Loire</option>
+            <option value="Provence-Alpes-Côte-d-azure">Provence Alpes Côte d'azure</option>
+          </select>
+      </div>
+      <div class="form_field_container">
+        <label for="date">Date</label>
+        <input required type="date" name="date" id="date" value="<?php $date = date('Y-m-d');
+        echo "$date"; ?>" min="<?php
+          $date = date('Y-m-d');
+          echo "$date"; ?>">
+      </div>
+      <div class="form_field_container">
+        <label for="description">Description</label>
+        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+      </div>
+      <input type="submit" value="Ajouter l'évènement">
+    </form>
+  </div>
 </body>
 </html>

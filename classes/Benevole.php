@@ -4,7 +4,7 @@ require_once __DIR__ . '/UUID.php';
 
 class Benevole
 {
-  public $id, $first_name, $last_name, $age, $genre, $phone, $email, $region, $dispo_jour, $dispo_horaire, $poste, $message, $date_inscription;
+  public $id, $first_name, $last_name, $age, $genre, $phone, $email, $region, $dispo_jour, $dispo_horaire, $poste, $message, $date_inscription, $missions;
 
   public function __construct($first_name, $last_name, $age, $genre, $phone, $email, $region, $dispo_jour, $dispo_horaire, $poste, $message)
   {
@@ -21,6 +21,17 @@ class Benevole
     $this->dispo_horaire = $dispo_horaire;
     $this->poste = $poste;
     $this->message = $message;
+    $this->missions = [];
+  }
+
+  public function get_missions()
+  {
+    return $this->missions;
+  }
+
+  public function set_missions($missions)
+  {
+    $this->missions = $missions;
   }
 
   public function get_date_inscription()
