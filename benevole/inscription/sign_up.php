@@ -31,7 +31,7 @@ if ($fields_empty) {
 
 
   $file = $csv->openCsv();
-  $csv->writeIntoCsv($file, ['id' => $benevole->id, 'first_name' => $benevole->first_name, 'last_name' => $benevole->last_name, 'age' => $benevole->age, 'genre' => $benevole->genre, 'phone' => $benevole->phone, 'email' => $benevole->email, 'region' => $benevole->region, 'dispo_jour' => $benevole->dispo_jour, 'dispo_horaire' => $benevole->dispo_horaire, 'poste' => $benevole->poste, 'message' => $benevole->message, 'date_inscription' => $benevole->date_inscription, 'missions' => '[]']);
+  $csv->writeIntoCsv($file, ['id' => $benevole->id, 'first_name' => $benevole->first_name, 'last_name' => $benevole->last_name, 'age' => $benevole->age, 'genre' => $benevole->genre, 'phone' => $benevole->phone, 'email' => $benevole->email, 'region' => $benevole->region, 'dispo_jour' => $benevole->dispo_jour, 'dispo_horaire' => $benevole->dispo_horaire, 'poste' => $benevole->poste, 'message' => $benevole->message, 'date_inscription' => $benevole->date_inscription, 'missions' => '']);
   $csv->closeCsv($file);
 
   header("Location: /gestion-benevole/benevole/inscription/success.php?code=$benevole->id");

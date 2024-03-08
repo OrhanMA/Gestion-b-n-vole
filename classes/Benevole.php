@@ -21,7 +21,7 @@ class Benevole
     $this->dispo_horaire = $dispo_horaire;
     $this->poste = $poste;
     $this->message = $message;
-    $this->missions = [];
+    $this->missions = "";
   }
 
   public function get_missions()

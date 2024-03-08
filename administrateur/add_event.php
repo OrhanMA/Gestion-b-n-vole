@@ -32,7 +32,7 @@ if (!empty($_SESSION) && !empty($_SESSION['is_admin']) && isset($_SESSION['is_ad
 
       $csv = new CsvManager('./../csv/events.csv');
       $file = $csv->openCsv();
-      $csv->writeIntoCsv($file, ['id' => $event->id, 'region' => $event->region, 'date' => $event->date, 'titre' => $event->titre, 'description' => $event->description, 'benevoles' => '[]']);
+      $csv->writeIntoCsv($file, ['id' => $event->id, 'region' => $event->region, 'date' => $event->date, 'titre' => $event->titre, 'description' => $event->description]);
       $csv->closeCsv($file);
 
       header('Location: /gestion-benevole/administrateur/index.php');

@@ -94,24 +94,16 @@ class CsvManager
   {
     $csv = new CsvManager($csv_path);
     $file = $csv->readCsv();
+    $temporary_file = fopen('php://temp', 'r+');
 
     while ($benevole = fgetcsv($file)) {
       if ($benevole[0] == $id) {
-        // print_r($benevole);
-        // print_r($benevole);
-
-        // isset et empty sur tableau
-        print_r($benevole);
-        // trouver index 
-        if (!in_array($new_mission, json_decode($benevole[13]))) {
-          $benevole[13] = $new_mission;
-          print_r($benevole);
-        } else {
-          // return erreur deja dedans
-        }
+        $benevole[13] = $new_mission;
       }
+      fputcsv($temporary_file, $benevole);
     }
+    rewind($temporary_file);
+    file_put_contents($csv_path, stream_get_contents($temporary_file));
+    fclose($temporary_file);
   }
-
-
 }

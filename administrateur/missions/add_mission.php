@@ -25,25 +25,18 @@ function add_mission_to_benevole($mission, $benevole_id)
   $benevole = $csv->getBenevoleByID($benevole_id, './../../csv/benevoles.csv');
 
   if (!empty($benevole) && isset($benevole[13])) {
-    $benevole_missions = json_decode($benevole[13], true);
-
-    // Check if decoding was successful
-    if ($benevole_missions !== null) {
-      // Add mission to the array
-      $benevole_missions[] = $mission;
-
-      // Encode the updated missions array back to JSON
-      $updated_missions_json = json_encode($benevole_missions);
-
-      // print_r($updated_missions_json);
-      // Update the CSV with the updated missions array
-
-      $csv->update_benevole_missions($benevole_id, $updated_missions_json, './../../csv/benevoles.csv');
-
-      // Now $benevole_missions contains the updated array with the new mission added
-      // print_r($benevole_missions);
+    $benevole_mission = $benevole[13];
+    // print_r($benevole_mission);
+    if (empty($benevole_mission) && isset($benevole_mission)) {
+      // print_r('mission is empty');
+      $benevole[13] = $mission;
+      // print_r($benevole);
+      $csv->update_benevole_missions($benevole_id, json_encode($benevole[13]), "./../../csv/benevoles.csv");
+      header('Location: /gestion-benevole/administrateur/index.php?message=Mission associée avec succès!&success=1');
+      exit;
     } else {
-      echo "Error decoding JSON string.";
+      print_r('mission is not empty');
+      header('Location: /gestion-benevole/administrateur/missions/failure.php?message=Il y a déjà une mission associer à ce bénévole&success=0');
     }
   } else {
     echo "Benevole not found or missions field not set.";

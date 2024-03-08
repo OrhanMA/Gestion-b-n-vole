@@ -84,14 +84,15 @@ if (!empty($_SESSION)) {
     </div>
   
     <form action="./add_event.php" method="post">
-      <span style="color:red; font-weight:bold;">
-        <?php
-        if (!empty($_GET['message']) && isset($_GET['message'])) {
-          $message = $_GET['message'];
-          echo "$message";
-        }
-        ?>
-      </span>
+    <span style="color: <?php echo isset($_GET['success']) && $_GET['success'] == "1" ? 'green' : 'red'; ?>;">
+      <?php
+      if (!empty($_GET['message'])) {
+        $message = $_GET['message'];
+        echo htmlspecialchars($message); // For security, encode HTML entities to prevent XSS attacks
+      }
+      ?>
+    </span>
+
       <caption>Remplissez ce formulaire pour ajouter un évènement</caption>
       <div class="form_field_container">
         <label for="titre">Titre</label>
