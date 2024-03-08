@@ -23,10 +23,10 @@ if (!empty($_SESSION)) {
       header('Location: gestion-benevole/administrateur/connexion/index.php?message=Veuillez vous identifier pour accéder à la page administrateur');
       exit;
     } else {
-      print_r('le gars est admin');
+      // print_r('le gars est admin');
     }
   } else {
-    print_r('session is empty or null');
+    // print_r('session is empty or null');
     header('Location: gestion-benevole/administrateur/connexion/index.php?message=Veuillez vous identifier pour accéder à la page administrateur');
   }
 } else {
@@ -83,7 +83,35 @@ if (!empty($_SESSION)) {
       </ul>
     </div>
   
-    <form action="./add_event.php" method="post">
+    <div>
+    <p>Liste des évènements</p>
+    <?php
+
+    require_once __DIR__ . './../classes/CsvManager.php';
+
+    $csv = new CsvManager('./../csv/events.csv');
+    $file = $csv->openCsv();
+    $events = $csv->readFromCsv();
+
+    // print_r($events);
+    
+    foreach ($events as $event) {
+      # code...
+      // print_r($event);
+      echo "
+      <div>
+        <p>Titre de l'évènement: $event[3]</p>
+        <p>Région: $event[1]</p>
+        <p>Date: $event[2]</p>
+        <p>Description: $event[4]</p>
+      </div>
+      ";
+    }
+
+    ?>
+  </div>
+  </div>
+  <form action="./add_event.php" method="post">
     <span style="color: <?php echo isset($_GET['success']) && $_GET['success'] == "1" ? 'green' : 'red'; ?>;">
       <?php
       if (!empty($_GET['message'])) {
@@ -92,11 +120,11 @@ if (!empty($_SESSION)) {
       }
       ?>
     </span>
-
-      <caption>Remplissez ce formulaire pour ajouter un évènement</caption>
+    
+    <caption>Remplissez ce formulaire pour ajouter un évènement</caption>
       <div class="form_field_container">
         <label for="titre">Titre</label>
-        <input type="text" name="titre" id="titre">
+        <input minlength="3" maxlength="50" type="text" name="titre" id="titre">
       </div>
       <div class="form_field_container">
         <label for="region">Région</label>
@@ -125,10 +153,10 @@ if (!empty($_SESSION)) {
       </div>
       <div class="form_field_container">
         <label for="description">Description</label>
-        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+        <textarea minlength="5" maxlength="100" name="description" id="description" cols="30" rows="10"></textarea>
       </div>
       <input type="submit" value="Ajouter l'évènement">
     </form>
-  </div>
+  
 </body>
 </html>

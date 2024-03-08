@@ -26,9 +26,13 @@ if (!empty($_SESSION) && !empty($_SESSION['is_admin']) && isset($_SESSION['is_ad
       }
       // print_r($form_data);
 
+      $date = DateTime::createFromFormat('Y-m-d', $form_data['date']);
+      $formatted_date = $date->format('d-m-Y');
+      $form_data['date'] = $formatted_date;
+
       $event = new Event($form_data['region'], $form_data['date'], $form_data['titre'], $form_data['description']);
 
-      print_r($event);
+      // print_r($event);
 
       $csv = new CsvManager('./../csv/events.csv');
       $file = $csv->openCsv();

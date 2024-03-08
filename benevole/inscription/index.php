@@ -98,7 +98,7 @@
       <caption>Formulaire 3/3</caption>
       <div class="form_field_container">
         <label for="message">Laissez un message libre</label>
-        <textarea required name="message" id="message" cols="30" rows="10" minlength="30" maxlength="500"></textarea>
+        <textarea required name="message" id="message" cols="30" rows="10" minlength="30" maxlength="500" >orrboinzrbonrzobnzrobnrzobnzrobnzroibnzrobnzroinbzoinornzroinrz</textarea>
         <input type="submit" value="Valider mon inscription">
       </div>
     </div>

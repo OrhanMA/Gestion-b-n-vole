@@ -106,4 +106,19 @@ class CsvManager
     file_put_contents($csv_path, stream_get_contents($temporary_file));
     fclose($temporary_file);
   }
+
+
+  public function search_in_csv($key, $value)
+  {
+    $file = $this->readCsv();
+    while ($row = fgetcsv($file)) {
+      print_r($row[$key]);
+      if ($row[$key] == $value) {
+        $this->closeCsv($file);
+        return true;
+      }
+    }
+    $this->closeCsv($file);
+    return false;
+  }
 }

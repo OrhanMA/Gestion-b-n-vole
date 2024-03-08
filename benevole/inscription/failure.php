@@ -7,16 +7,22 @@
 </head>
 <body>
 
-<?php
-
-
-?>
   <h1>Échec de l'inscription</h1>
   <p>Un problème s'est produit lors de la création de votre profil bénévole.</p>
+<?php
+if (!empty($_GET['message'] && isset($_GET['message']))) {
+  $message = $_GET['message'];
+  echo "<p class ='error'>$message</p>";
+}
+?>
   <div>
     <a href="./index.php">Réesayer</a>
     <a href="../../index.php">Page d'accueil</a>
   </div>
-
+<style>
+  .error {
+    color:red
+  }
+</style>
 </body>
 </html>
