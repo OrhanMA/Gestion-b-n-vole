@@ -74,6 +74,8 @@
         </div>";
       }
     }
+  } else {
+    header('Location: ./connexion/index.php');
   }
 
   // récupérer l'ID du user passé en paramètre d'url. Cet ID est passé dans le location header côté back-end

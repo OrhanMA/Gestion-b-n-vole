@@ -37,24 +37,16 @@
     header('Location: gestion-benevole/administrateur/connexion/index.php?message=Veuillez vous identifier pour accéder à la page administrateur');
     exit;
   }
-  // afficher un formulaire pour créer un évènement ✅
-
-  // récupérer avec php la liste de tous les bénévoles
-
-  // mettre un champ à sélection multiple et y injecter les propositions de bénévoles
-
-  // mettre des contraintes de champs avec javascript 
-  // à la soumission du formulaire:
-  // récupérer les données du formulaire dans un autre fichier ✅
-  // valider les données ✅
-  // créer une nouvelle instance d'évènements ✅
-  // pour les bénévoles, les ajouter à la propriété d'Évènements dans un tableau pour les réunir. 
-  // enregister l'évènement dans le CSV ✅
-  // rediriger vers la même page qui mettra automatiquement à jour les données grâce au script déjà écrit. ✅
-
-
   ?>
   <h1>Page administrateur</h1>
+  <span style="color: <?php echo isset($_GET['success']) && $_GET['success'] == "1" ? 'green' : 'red'; ?>;">
+    <?php
+    if (!empty($_GET['message'])) {
+      $message = $_GET['message'];
+      echo htmlspecialchars($message);
+    }
+    ?>
+  </span>
   <div class="content-container">
     <div class="card">
       <p class="card-head">Liste des bénévoles</p>
@@ -114,14 +106,6 @@
       ?>
     </div>
   </div>
-  <span style="color: <?php echo isset($_GET['success']) && $_GET['success'] == "1" ? 'green' : 'red'; ?>;">
-    <?php
-    if (!empty($_GET['message'])) {
-      $message = $_GET['message'];
-      echo htmlspecialchars($message);
-    }
-    ?>
-  </span>
   <form action="./add_event.php" method="post" class="card">
 
     <p class="card-head">Remplissez ce formulaire pour ajouter un évènement</p>
@@ -129,7 +113,7 @@
 
       <div class="form_field_container">
         <label for="titre">Titre</label>
-        <input minlength="3" maxlength="50" type="text" name="titre" id="titre">
+        <input required minlength="3" maxlength="50" type="text" name="titre" id="titre">
       </div>
       <div class="form_field_container">
         <label for="region">Région</label>
@@ -158,7 +142,7 @@
       </div>
       <div class="form_field_container">
         <label for="description">Description</label>
-        <textarea minlength="5" maxlength="100" name="description" id="description" cols="30" rows="10"></textarea>
+        <textarea required minlength="5" maxlength="100" name="description" id="description" cols="30" rows="10"></textarea>
       </div>
       <input type="submit" value="Ajouter l'évènement" class="button-accent">
     </div>

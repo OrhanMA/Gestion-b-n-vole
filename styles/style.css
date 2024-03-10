@@ -159,6 +159,10 @@ input[type="submit"] {
 .content-container > .card {
   width: 100%;
 }
+
+.benevole-message > p {
+  word-wrap: break-word;
+}
 @media screen and (min-width: 640px) {
   p {
     line-height: 1.5rem;
@@ -189,6 +193,12 @@ input[type="submit"] {
 @media screen and (min-width: 1024px) {
   form {
     width: 60%;
+  }
+  .content-container > .card {
+    width: 40%;
+  }
+  .card {
+    max-width: 900px;
   }
 }
 
