@@ -9,7 +9,7 @@
 </head>
 
 <body>
-
+  <?php require_once __DIR__ . './../../composants/header.php' ?>
   <h1>Échec de l'inscription</h1>
   <p>Un problème s'est produit lors de la création de votre profil bénévole.</p>
 

@@ -9,6 +9,11 @@
 </head>
 
 <body>
+  <?php
+
+  include './composants/header.php';
+
+  ?>
   <h1>Action Bénévole</h1>
   <div class="card">
     <p class="card-head">Qui sommes-nous?</p>

@@ -9,11 +9,14 @@
 </head>
 
 <body>
+  <?php require_once __DIR__ . './../composants/header.php' ?>
   <h1>Page bénévole</h1>
 
   <?php
 
   require_once __DIR__ . './../classes/CsvManager.php';
+
+
   // print_r($_GET);
 
   if (!empty($_GET)) {

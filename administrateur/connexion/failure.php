@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <?php require_once __DIR__ . './../../composants/header.php' ?>
   <h1>Erreur d'accès à l'espace adminstrateur.</h1>
   <div class="card">
     <div class="card-body">

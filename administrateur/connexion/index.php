@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <?php require_once __DIR__ . './../../composants/header.php' ?>
   <h1>Page de connexion administrateur</h1>
 
   <?php

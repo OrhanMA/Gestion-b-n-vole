@@ -9,7 +9,11 @@
 </head>
 
 <body>
+  <?php
 
+  require_once __DIR__ . './../../composants/header.php'
+
+  ?>
   <h1>Page d'inscription bénévole</h1>
   <p>Remplissez le formulaire afin de créer votre profil de bénévole.</p>
   <form id="form" action="./sign_up.php" method="post">
@@ -18,14 +22,17 @@
       <div class="form_field_container">
         <label for="first_name">Prénom</label>
         <input required type="text" name="first_name" id="first_name" minlength="3" maxlength="30" value="David">
+        <span class="error-span" id="first_name_error"></span>
       </div>
       <div class="form_field_container">
         <label for="last_name">Nom de famille</label>
         <input required type="text" name="last_name" id="last_name" minlength="3" maxlength="30" value="OUUIUUAIIISIS">
+        <span class="error-span" id="last_name_error"></span>
       </div>
       <div class="form_field_container">
         <label for="age">Âge</label>
         <input required type="number" name="age" id="age" min="18" max="45" value="30">
+        <span class="error-span" id="age_error"></span>
       </div>
       <div class="form_field_container">
         <label for="genre">Sexe</label>
@@ -34,14 +41,17 @@
           <option value="homme">Homme</option>
           <option value="secret">Non spécifié</option>
         </select>
+        <span class="error-span" id="genre_error"></span>
       </div>
       <div class="form_field_container">
         <label for="phone">N° téléphone</label>
         <input required type="tel" name="phone" id="phone" value="0623456789" pattern="^(06|07)\d{8}$">
+        <span class="error-span" id="phone_error"></span>
       </div>
       <div class="form_field_container">
         <label for="email">Adresse email</label>
         <input required type="email" name="email" id="email" value="test@test.com">
+        <span class="error-span" id="email_error"></span>
       </div>
       <button class="suivant button-accent" type="button">Suivant</button>
     </div>
@@ -64,6 +74,7 @@
           <option value="Pays-de-la-loire">Pays de la Loire</option>
           <option value="Provence-Alpes-Côte-d-azure">Provence Alpes Côte d'azure</option>
         </select>
+        <span class="error-span" id="region_error"></span>
       </div>
       <div class="form_field_container">
         <label for="dispo_jour">Disponiblité jour</label>
@@ -71,6 +82,7 @@
           <option value="semaine">semaine</option>
           <option value="weekend">weekend</option>
         </select>
+        <span class="error-span" id="dispo_jour_error"></span>
       </div>
       <div class="form_field_container">
         <label for="dispo_horaire">Disponiblité horaire</label>
@@ -80,6 +92,7 @@
           <option value="soir">soir</option>
           <option value="nuit">nuit</option>
         </select>
+        <span class="error-span" id="dispo_horaire_error"></span>
       </div>
       <div class="form_field_container">
         <label for="poste">Poste privilégié</label>
@@ -89,6 +102,7 @@
           <option value="technique">technique</option>
           <option value="animation">animation</option>
         </select>
+        <span class="error-span" id="poste_error"></span>
       </div>
       <button class="suivant button-accent" type="button">Suivant</button>
     </div>
@@ -97,6 +111,7 @@
       <div class="form_field_container">
         <label for="message">Laissez un message libre</label>
         <textarea required name="message" id="message" cols="30" rows="10" minlength="30" maxlength="500">orrboinzrbonrzobnzrobnrzobnzrobnzroibnzrobnzroinbzoinornzroinrz</textarea>
+        <span class="error-span" id="message_error"></span>
         <input type="submit" class="button-accent" value="Valider mon inscription">
       </div>
     </div>
@@ -114,7 +129,28 @@
 
     const buttons_suivant = document.querySelectorAll('.suivant');
     // console.log(buttons_suivant);
+    const form = document.getElementById('form');
+    const formFields = form.querySelectorAll('input, select, textarea');
+    // console.log(formFields);
+    formFields.forEach(field => {
+      // console.log(field);
+      field.addEventListener('input', () => {
+        console.log(field);
+        const error_span = document.getElementById(`${field.name}_error`);
+        if (!field.validity.valid) {
+          error_span.style.display = 'flex';
+          all_fields_valid = false;
 
+          console.log(field.name);
+          // alert(`${field.name} is not valid`);
+          error_span.textContent = getErrorMessage(field.name);
+        } else {
+          error_span.style.display = 'hidden';
+          error_span.textContent = '';
+
+        }
+      })
+    });
     buttons_suivant.forEach((button) => {
       button.addEventListener('click', () => {
         if (step_number === 1) {
@@ -174,16 +210,60 @@
       let all_fields_valid = true;
 
       fields.forEach((field) => {
-        console.log(field.validity.valid);
+        // console.log(field.validity);
         // console.log(field.validity.typeMismatch);
         if (!field.validity.valid) {
           all_fields_valid = false;
 
           console.log(field.name);
-          alert(`${field.name} is not valid`);
+          // alert(`${field.name} is not valid`);
+          const error_span = document.getElementById(`${field.name}_error`);
+          error_span.textContent = getErrorMessage(field.name);
         }
       })
       return all_fields_valid;
+    }
+
+
+    function getErrorMessage(field_name) {
+      switch (field_name) {
+        case 'first_name':
+          return 'Entrez un prénom entre 3 et 30 lettres';
+          break;
+        case 'last_name':
+          return 'Entrez un nom entre 3 et 30 lettres';
+          break;
+        case 'age':
+          return 'Entrez un age entre 18 et 45 ans';
+          break;
+        case 'genre':
+          return 'Veuillez sélectionner votre genre';
+          break;
+        case 'phone':
+          return 'Veuillez entrez un numéro de téléphone portable français';
+          break;
+        case 'email':
+          return 'Veuillez entrez un email valide';
+          break;
+        case 'region':
+          return 'Veuillez sélectionner une des régions de la liste';
+          break;
+        case 'dispo_jour':
+          return 'Veuillez sélectionner une des disponibilité de la liste';
+          break;
+        case 'dispo_horaire':
+          return 'Veuillez sélectionner une des disponibilité de la liste';
+          break;
+        case 'poste':
+          return 'Veuillez sélectionner une des postes de la liste';
+          break;
+        case 'message':
+          return "Veuillez sélectionner un message d'au moins 30 caractères";
+          break;
+        default:
+          "Le champ est invalide"
+      }
+
     }
   </script>
 

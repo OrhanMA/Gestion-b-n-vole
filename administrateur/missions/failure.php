@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <?php require_once __DIR__ . './../../composants/header.php' ?>
   <div>
     <h1>
       <?php

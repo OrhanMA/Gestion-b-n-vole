@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <?php require_once __DIR__ . './../../composants/header.php' ?>
   <h1>Page de connexion bénévole</h1>
   <form action="./sign_in.php" method="post" class="card">
     <p class="card-head">

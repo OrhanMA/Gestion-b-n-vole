@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <?php require_once __DIR__ . './../../composants/header.php' ?>
   <h1>Confirmation de l'inscription</h1>
   <p>Vous avez bien été inscrit votre code est: <span style="font-weight: bold;"></span>.</p>
   <p> Notez le bien!</p>
