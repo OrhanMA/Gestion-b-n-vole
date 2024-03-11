@@ -8,24 +8,29 @@ if (!empty($_POST)) {
     header('Location: /gestion-benevole/benevole/connexion/failure.php?message="code is empty');
     exit;
   } else {
-    $code = htmlspecialchars($_POST['code']);
-    //récupération des bénévoles dans le csv
+    $code = $_POST['code'];
+
+
+    // print_r($code);
     $csv = new CsvManager('./../../csv/benevoles.csv');
     $file = $csv->openCsv();
-    $csv->readCsv();
     $benevoles = $csv->readFromCsv();
+    // print_r($benevoles);
 
-    //variable vide pour y mettre le bénévole si on le trouve par la suite
-    $user_found;
+
     foreach ($benevoles as $benevole) {
-      // ajouter la bénévole dans la variable $user_found si son ID correspond au code soumis
       $benevole_id = $benevole[0];
-      if ($benevole_id == $code) {
+      // echo $benevole[0] . "<br/>";
+      if (strcmp($benevole[0], $code) == 0) {
+        // echo $benevole[0] . "<br/>";
+        // $benevole_id = trim($benevole[0], '"');
         $user_found = $benevole;
+        print_r($benevole[0]);
       }
     }
+
     $csv->closeCsv($file);
-    // redirige selon si user trouvé ou pas
+
     if (!empty($user_found)) {
       print_r($user_found);
       header("Location: /gestion-benevole/benevole/index.php?code=$code");
@@ -41,4 +46,3 @@ if (!empty($_POST)) {
   header('Location: /gestion-benevole/benevole/connexion/failure.php?message="post is empty"');
   exit;
 }
-

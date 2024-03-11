@@ -17,12 +17,32 @@ class CsvManager
 
 
     foreach ($benevoles as $benevole) {
-      // ajouter la bénévole dans la variable $user_found si son ID correspond au code soumis
+
       $benevole_id = $benevole[0];
       if ($benevole_id == $id) {
-        $user_found = $benevole;
+
         $csv->closeCsv($file);
-        return $user_found;
+        return $benevole;
+      }
+    }
+    $csv->closeCsv($file);
+    return null;
+  }
+
+  function getEventByID($id, $csvPath)
+  {
+    $csv = new CsvManager($csvPath);
+    $file = $csv->openCsv();
+    $csv->readCsv();
+    $events = $csv->readFromCsv();
+
+
+    foreach ($events as $event) {
+      $event_id = $event[0];
+      // print_r($event_id);
+      if ($event_id == $id) {
+        $csv->closeCsv($file);
+        return $event;
       }
     }
     $csv->closeCsv($file);
@@ -36,11 +56,29 @@ class CsvManager
   }
   function openCsv()
   {
-    return fopen($this->pathToCsv, 'ab');
+    $file = fopen($this->pathToCsv, 'ab');
+    if (!$file) {
+      // Handle file opening error (log, report, etc.)
+      die("Failed to open CSV file: " . $this->pathToCsv);
+    }
+    return $file;
   }
+
   function writeIntoCsv($file, $arrayToWrite)
   {
-    fputcsv($file, $arrayToWrite);
+    // print_r($arrayToWrite);
+    // Write data to CSV
+    if (!is_resource($file)) {
+      die("Error: File handle is not valid.");
+    }
+    if (fputcsv($file, $arrayToWrite) === false) {
+      // Handle error in fputcsv()
+      die("Error writing data to CSV: " . error_get_last()['message']);
+    }
+
+    // Debug: Get stream status
+    $meta_data = stream_get_meta_data($file);
+    // print_r($meta_data);
   }
   function closeCsv($file)
   {
@@ -112,7 +150,7 @@ class CsvManager
   {
     $file = $this->readCsv();
     while ($row = fgetcsv($file)) {
-      print_r($row[$key]);
+      // print_r($row[$key]);
       if ($row[$key] == $value) {
         $this->closeCsv($file);
         return true;

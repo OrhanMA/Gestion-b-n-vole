@@ -27,10 +27,15 @@
       $csv = new CsvManager('./../csv/benevoles.csv');
       $user_found = $csv->getBenevoleByID($code, './../csv/benevoles.csv');
 
+      // if (isset($user_found[13]) && !empty($user_found[13])) {
+      $event_csv = new CsvManager('./../csv/events.csv');
+      $mission = $event_csv->getEventByID($user_found[13], './../csv/events.csv');
       if (isset($user_found) && !empty($user_found)) {
         // print_r($user_found);
 
 
+        // echo "<p>$user_found[13]";
+        // }
         // nom, prénom, autres infos
         // date inscription 
         // préférences dispos...
