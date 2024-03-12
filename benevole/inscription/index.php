@@ -21,7 +21,7 @@
       <caption>Formulaire 1/3</caption>
       <div class="form_field_container">
         <label for="first_name">Prénom</label>
-        <input required type="text" name="first_name" id="first_name" minlength="3" maxlength="30" value="David">
+        <input required type="text" name="first_name" id="first_name" minlength="3" maxlength="30" value="David" autofocus>
         <span class="error-span" id="first_name_error"></span>
       </div>
       <div class="form_field_container">

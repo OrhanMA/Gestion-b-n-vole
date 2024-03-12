@@ -29,18 +29,14 @@ class CsvManager
     return null;
   }
 
-  function getEventByID($id, $csvPath)
+  function getEventByID($mission_id, $csvPath)
   {
     $csv = new CsvManager($csvPath);
-    $file = $csv->openCsv();
-    $csv->readCsv();
+    $file = $csv->readCsv();
     $events = $csv->readFromCsv();
 
-
     foreach ($events as $event) {
-      $event_id = $event[0];
-      // print_r($event_id);
-      if ($event_id == $id) {
+      if ($mission_id == $event[0]) {
         $csv->closeCsv($file);
         return $event;
       }

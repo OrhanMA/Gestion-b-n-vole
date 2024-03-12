@@ -32,7 +32,7 @@
     <div class="card-body">
       <div class="card-body-field">
         <label for="username">Nom d'utilisateur</label>
-        <input required type="text" name="username" id="username">
+        <input required type="text" name="username" id="username" autofocus>
       </div>
       <div class="card-body-field">
         <label for="password">Mot de passe</label>

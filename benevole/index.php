@@ -27,18 +27,7 @@
       $csv = new CsvManager('./../csv/benevoles.csv');
       $user_found = $csv->getBenevoleByID($code, './../csv/benevoles.csv');
 
-      // if (isset($user_found[13]) && !empty($user_found[13])) {
-      $event_csv = new CsvManager('./../csv/events.csv');
-      $mission = $event_csv->getEventByID($user_found[13], './../csv/events.csv');
       if (isset($user_found) && !empty($user_found)) {
-        // print_r($user_found);
-
-
-        // echo "<p>$user_found[13]";
-        // }
-        // nom, prénom, autres infos
-        // date inscription 
-        // préférences dispos...
         echo "
         <div class='benevole_categories card'>
           <p class='card-head'>
@@ -80,6 +69,29 @@
             </div>
           </div>
         </div>";
+
+        if (isset($user_found[13]) && !empty($user_found[13])) {
+          $mission_id = json_decode($user_found[13]);
+          $event_csv = new CsvManager('./../csv/events.csv');
+          $file = $event_csv->readCsv();
+          $mission = $event_csv->getEventByID($mission_id, './../csv/events.csv');
+
+          echo "<div class='card mission-card'>";
+          echo "<p class='card-head'>Mission(s) attitrée(s)</p>";
+          echo "<ul>";
+          echo
+          "
+          <li>
+          <p>Titre: $mission[3]</p>
+          <p>Région: $mission[1]</p>
+          <p>Date: $mission[2]</p>
+          <p class='mission-card-description'>Description: $mission[4]</p>
+          
+          </li>
+          ";
+          echo "</ul>";
+          echo "</div>";
+        }
       }
     }
   } else {

@@ -17,7 +17,7 @@
     </p>
     <div class="card-body">
       <label for="code">Votre code unique:</label>
-      <input required type="text" name="code" id="code">
+      <input required type="text" name="code" id="code" autofocus>
       <input type="submit" value="Me connecter" class="button-accent">
     </div>
   </form>
