@@ -11,30 +11,20 @@
 <body>
   <?php
   session_start();
-
   require_once __DIR__ . './../composants/header.php';
-
-
 
   if (!empty($_SESSION)) {
     if (!empty($_SESSION['is_admin']) && isset($_SESSION['is_admin'])) {
       $is_admin = $_SESSION['is_admin'] == 1 ? true : false;
-      // print_r($is_admin);
       if ($is_admin != 1) {
-        // print_r('le gars est pas admin');
-        // session_destroy();
         header('Location: gestion-benevole/administrateur/connexion/index.php?message=Veuillez vous identifier pour accéder à la page administrateur');
         exit;
-      } else {
-        // print_r('le gars est admin');
       }
     } else {
-      // print_r('session is empty or null');
+      // session is empty or null
       header('Location: gestion-benevole/administrateur/connexion/index.php?message=Veuillez vous identifier pour accéder à la page administrateur');
     }
   } else {
-    print_r('session is empty');
-    // session_destroy();
     header('Location: gestion-benevole/administrateur/connexion/index.php?message=Veuillez vous identifier pour accéder à la page administrateur');
     exit;
   }
@@ -53,15 +43,11 @@
       <p class="card-head">Liste des bénévoles</p>
       <ul class="admin-benevole-list card-body">
         <?php
-
         require_once __DIR__ . './../classes/CsvManager.php';
-
         $csv = new CsvManager('./../csv/benevoles.csv');
         $file = $csv->openCsv();
         $benevoles = $csv->readFromCsv();
-        // print_r($benevoles);
         foreach ($benevoles as $key => $value) {
-          # code...
           echo "
           <li>
             <div>
@@ -71,9 +57,6 @@
             <a href='http://localhost:8888/gestion-benevole/administrateur/missions/assignation.php?benevole=$value[0]'>Assigner une mission</a>
           </li>";
         }
-
-
-
         ?>
       </ul>
     </div>
@@ -87,12 +70,8 @@
       $csv = new CsvManager('./../csv/events.csv');
       $file = $csv->openCsv();
       $events = $csv->readFromCsv();
-
-      // print_r($events);
       echo "<ul class='admin-event-list card-body'>";
       foreach ($events as $event) {
-        # code...
-        // print_r($event);
         echo "
       <li class='card-body'>
         <p>Titre: $event[3]</p>
@@ -103,15 +82,12 @@
       ";
       }
       echo "</ul>";
-
       ?>
     </div>
   </div>
   <form action="./add_event.php" method="post" class="card">
-
     <p class="card-head">Remplissez ce formulaire pour ajouter un évènement</p>
     <div class="card-body">
-
       <div class="form_field_container">
         <label for="titre">Titre</label>
         <input required minlength="3" maxlength="50" type="text" name="titre" id="titre">
@@ -136,13 +112,13 @@
       </div>
       <div class="form_field_container">
         <label for="date">Date</label>
+        <!-- Formatage cassé désolé :( -->
         <input required type="date" name="date" id="date" value="<?php $date = date('Y-m-d');
-                                                                  echo "$date"; ?>" min="<?php
-                                                                                          $date = date('Y-m-d');
+                                                                  echo "$date"; ?>" min="<?php $date = date('Y-m-d');
                                                                                           echo "$date"; ?>">
       </div>
       <div class="form_field_container">
-        <label for="description">Description</label>
+        <label for="description">Commentaire</label>
         <textarea required minlength="5" maxlength="100" name="description" id="description" cols="30" rows="10"></textarea>
       </div>
       <input type="submit" value="Ajouter l'évènement" class="button-accent">

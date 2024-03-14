@@ -17,7 +17,6 @@
   require_once __DIR__ . './../classes/CsvManager.php';
 
 
-  // print_r($_GET);
 
   if (!empty($_GET)) {
     if (!empty($_GET['code']) && isset($_GET['code'])) {
@@ -97,14 +96,6 @@
   } else {
     header('Location: ./connexion/index.php');
   }
-
-  // récupérer l'ID du user passé en paramètre d'url. Cet ID est passé dans le location header côté back-end
-
-  // récupérer ses données avec php avec l'id au chargement de la page
-
-  // les afficher
-
-  // proposer une redirection vers la page d'accueil et vers logout? 
   ?>
   <script defer>
     const searchParams = window.location.search;

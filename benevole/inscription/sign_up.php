@@ -9,7 +9,7 @@ $fields_empty = false;
 foreach ($required_fields as $field) {
   if (empty($_POST[$field])) {
     $fields_empty = true;
-    break; // exit the loop as soon as an empty field is found
+    break; // exit if field empty
   }
 }
 
@@ -37,6 +37,7 @@ if ($fields_empty) {
   }
 
 
+  // check each field with regex
   $regex_array = [
     '/^[a-zA-Z]{3,30}$/', '/^[a-zA-Z]{3,30}$/', '/^(1[89]|[2-3][0-9]|4[0-5])$/', '/^(homme|femme|secret)$/', '/^(06|07)\d{8}$/', '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', '/^(Auvergne\-Rhône\-Alpes|Bourgogne\-Franche\-Comté|Bretagne|Centre\-Val de Loire|Corse|Grand Est|Hauts\-de\-France|Île\-de\-France|Normandie|Nouvelle\-Aquitaine|Occitanie|Pays de la Loire|Provence Alpes Côte d\'azure)$/', '/^(semaine|weekend)$/', '/^(matin|apres-midi|soir|nuit)$/', '/^(sécurité|bar|technique|animation)$/', '/^[a-zA-Z]{30,500}$/'
   ];
@@ -46,8 +47,8 @@ if ($fields_empty) {
   $index = 0;
   foreach ($form_data as $key => $value) {
     $field_valid = validate_field($form_data, $key, $regex_array[$index]);
-    if ($field_valid !== false) {
-      $all_fields_valid = true;
+    if ($field_valid == false) {
+      $all_fields_valid = false;
       break;
     }
     $index++;
@@ -58,10 +59,8 @@ if ($fields_empty) {
     exit;
   }
 
-  // If user does not exist, proceed with registration
+  // Registration if user does not exist
   $benevole = new Benevole($form_data['first_name'], $form_data['last_name'], $form_data['age'], $form_data['genre'], $form_data['phone'], $form_data['email'], $form_data['region'], $form_data['dispo_jour'], $form_data['dispo_horaire'], $form_data['poste'], $form_data['message']);
-
-  // print_r($benevole);
 
   // Open the CSV file again to write the new user's data
   $file = $csv->openCsv();
@@ -81,7 +80,7 @@ function validate_field($form_data, $field, $regex = null)
     return "pas de regex possibles pour comparer le champ";
   } else {
     $value = $form_data[$field];
-    // perform a match with a regex, return true if there is match
+    // perform a match with a regex, return true if there is match (field valid) and false is field does not respect the regex
     if (preg_match($regex, $value)) {
       return true;
     } else {

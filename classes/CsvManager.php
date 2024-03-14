@@ -62,8 +62,6 @@ class CsvManager
 
   function writeIntoCsv($file, $arrayToWrite)
   {
-    // print_r($arrayToWrite);
-    // Write data to CSV
     if (!is_resource($file)) {
       die("Error: File handle is not valid.");
     }
@@ -73,24 +71,13 @@ class CsvManager
     }
 
     // Debug: Get stream status
-    $meta_data = stream_get_meta_data($file);
-    // print_r($meta_data);
+    // $meta_data = stream_get_meta_data($file);
+
   }
   function closeCsv($file)
   {
     fclose($file);
   }
-
-  // function findBenevole($code) 
-  // {
-  //   $data = [];
-  //   $csv = $this->readCsv();
-  //   if(!$csv == false) {
-  //     while (($row = fgetcsv($csv)) !== false) {
-
-  //     }
-  //   }
-  // }
 
   public function readFromCsv()
   {
@@ -115,19 +102,13 @@ class CsvManager
     return $data;
     // retourne la data
   }
-  function get_path(): string
-  {
-    return $this->pathToCsv;
-  }
-  function set_path($path)
-  {
-    $this->pathToCsv = $path;
-  }
 
   public function update_benevole_missions($id, $new_mission, $csv_path)
   {
     $csv = new CsvManager($csv_path);
     $file = $csv->readCsv();
+    // crée un fichier csv temporaire et copie toutes les données sauf pour la condition respectée puis les transverse dans le fichier csv de base. 
+    // C'est la seule façon que j'ai trouvé pour update un champ dans un csv
     $temporary_file = fopen('php://temp', 'r+');
 
     while ($benevole = fgetcsv($file)) {
@@ -146,7 +127,6 @@ class CsvManager
   {
     $file = $this->readCsv();
     while ($row = fgetcsv($file)) {
-      // print_r($row[$key]);
       if ($row[$key] == $value) {
         $this->closeCsv($file);
         return true;

@@ -9,6 +9,7 @@
   font-family: "Poppins", sans-serif;
 }
 
+
 body {
   display: flex;
   flex-direction: column;
@@ -36,6 +37,9 @@ p {
   color: var(--heart);
 }
 
+.error {
+  color: red
+}
 header {
   display: flex;
   justify-content: space-around;

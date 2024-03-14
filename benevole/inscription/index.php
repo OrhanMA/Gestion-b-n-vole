@@ -119,30 +119,22 @@
   <script defer>
     // récupère tous les formulaires du document
     const forms_parts = document.querySelectorAll('.form_part');
-    // récupère les paramètres d'URL
     const urlParams = new URLSearchParams(window.location.search);
 
     // Récupère le paramètre d'étape du formulaire
     const step = urlParams.get('step');
     let step_number = Number(step) || 1;
-    console.log(step_number);
 
     const buttons_suivant = document.querySelectorAll('.suivant');
-    // console.log(buttons_suivant);
     const form = document.getElementById('form');
     const formFields = form.querySelectorAll('input, select, textarea');
-    // console.log(formFields);
     formFields.forEach(field => {
-      // console.log(field);
+      // pour chaque field, vérifie si le format est valide et affiche un message d'erreur si besoin
       field.addEventListener('input', () => {
-        console.log(field);
         const error_span = document.getElementById(`${field.name}_error`);
         if (!field.validity.valid) {
           error_span.style.display = 'flex';
           all_fields_valid = false;
-
-          console.log(field.name);
-          // alert(`${field.name} is not valid`);
           error_span.textContent = getErrorMessage(field.name);
         } else {
           error_span.style.display = 'hidden';
@@ -151,6 +143,7 @@
         }
       })
     });
+    // sur chaque bouton suivant du formulaire check chaque champ de la partie du form
     buttons_suivant.forEach((button) => {
       button.addEventListener('click', () => {
         if (step_number === 1) {
@@ -178,7 +171,6 @@
       if (step) {
         // pour chaque formulaire, si son ID correspond à l'étape actuelle, affiche le, sinon cache le.
         if (step === "") {
-          // console.log('step empty');
           displayFormPart('form_1');
         } else {
           const form_class = 'form_' + step.toString();
@@ -191,7 +183,6 @@
 
     function displayFormPart(form_class) {
       forms_parts.forEach(form => {
-        // console.log(form_class);
         if (form.classList.contains(form_class)) {
           form.style.display = 'flex';
         } else {
@@ -210,13 +201,8 @@
       let all_fields_valid = true;
 
       fields.forEach((field) => {
-        // console.log(field.validity);
-        // console.log(field.validity.typeMismatch);
         if (!field.validity.valid) {
           all_fields_valid = false;
-
-          console.log(field.name);
-          // alert(`${field.name} is not valid`);
           const error_span = document.getElementById(`${field.name}_error`);
           error_span.textContent = getErrorMessage(field.name);
         }

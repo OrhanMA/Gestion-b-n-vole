@@ -13,16 +13,12 @@
   <h1>Erreur d'accès à l'espace adminstrateur.</h1>
   <div class="card">
     <div class="card-body">
-
       <p class="card-head">Vous avez été redirigé sur cette page car une erreur s'est produite.</p>
       <?php
-
       if (!empty($_GET) && !empty($_GET['message']) && isset($_GET['message'])) {
-        print_r('condition reached');
         $message = $_GET['message'];
         echo "<p style='color:red;'> $message </p>";
       }
-
       ?>
       <div class="index-nav-list" style="display: flex;">
         <a href="../connexion/index.php">Me reconnecter</a>

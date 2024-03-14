@@ -25,11 +25,6 @@
       <a href="../../index.php">Page d'accueil</a>
     </nav>
   </div>
-  <style>
-    .error {
-      color: red
-    }
-  </style>
 </body>
 
 </html>
