@@ -36,6 +36,28 @@ if ($fields_empty) {
     exit;
   }
 
+
+  $regex_array = [
+    '/^[a-zA-Z]{3,30}$/', '/^[a-zA-Z]{3,30}$/', '/^(1[89]|[2-3][0-9]|4[0-5])$/', '/^(homme|femme|secret)$/', '/^(06|07)\d{8}$/', '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', '/^(Auvergne\-Rhône\-Alpes|Bourgogne\-Franche\-Comté|Bretagne|Centre\-Val de Loire|Corse|Grand Est|Hauts\-de\-France|Île\-de\-France|Normandie|Nouvelle\-Aquitaine|Occitanie|Pays de la Loire|Provence Alpes Côte d\'azure)$/', '/^(semaine|weekend)$/', '/^(matin|apres-midi|soir|nuit)$/', '/^(sécurité|bar|technique|animation)$/', '/^[a-zA-Z]{30,500}$/'
+  ];
+
+  $all_fields_valid = false;
+
+  $index = 0;
+  foreach ($form_data as $key => $value) {
+    $field_valid = validate_field($form_data, $key, $regex_array[$index]);
+    if ($field_valid !== false) {
+      $all_fields_valid = true;
+      break;
+    }
+    $index++;
+  }
+
+  if (!$all_fields_valid) {
+    header('Location: /gestion-benevole/benevole/inscription/failure.php');
+    exit;
+  }
+
   // If user does not exist, proceed with registration
   $benevole = new Benevole($form_data['first_name'], $form_data['last_name'], $form_data['age'], $form_data['genre'], $form_data['phone'], $form_data['email'], $form_data['region'], $form_data['dispo_jour'], $form_data['dispo_horaire'], $form_data['poste'], $form_data['message']);
 
@@ -50,4 +72,20 @@ if ($fields_empty) {
 
   header("Location: /gestion-benevole/benevole/inscription/success.php?code=$benevole->id");
   exit;
+}
+
+
+function validate_field($form_data, $field, $regex = null)
+{
+  if ($regex == null) {
+    return "pas de regex possibles pour comparer le champ";
+  } else {
+    $value = $form_data[$field];
+    // perform a match with a regex, return true if there is match
+    if (preg_match($regex, $value)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
