@@ -13,7 +13,7 @@
   <div>
     <h1>
       <?php
-      if (!empty($_GET['message']) && isset($_GET['message'])) {
+      if (isset($_GET['message']) && !empty($_GET['message'])) {
         echo $_GET['message'];
       } else {
         echo "Un problème est survenu lors de l'ajout de la mission";

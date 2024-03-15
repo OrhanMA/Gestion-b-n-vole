@@ -14,7 +14,7 @@ foreach ($required_fields as $field) {
 }
 
 session_start();
-if (!empty($_SESSION) && !empty($_SESSION['is_admin']) && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1) {
+if (isset($_SESSION['is_admin']) && !empty($_SESSION) && !empty($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1) {
   if (!empty($_POST)) {
     if (!$fields_empty) {
       $form_data = [];

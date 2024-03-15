@@ -14,7 +14,7 @@
   require_once __DIR__ . './../composants/header.php';
 
   if (!empty($_SESSION)) {
-    if (!empty($_SESSION['is_admin']) && isset($_SESSION['is_admin'])) {
+    if (isset($_SESSION['is_admin']) && !empty($_SESSION['is_admin'])) {
       $is_admin = $_SESSION['is_admin'] == 1 ? true : false;
       if ($is_admin != 1) {
         header('Location: gestion-benevole/administrateur/connexion/index.php?message=Veuillez vous identifier pour accéder à la page administrateur');

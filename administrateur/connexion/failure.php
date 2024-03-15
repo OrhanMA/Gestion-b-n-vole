@@ -15,7 +15,7 @@
     <div class="card-body">
       <p class="card-head">Vous avez été redirigé sur cette page car une erreur s'est produite.</p>
       <?php
-      if (!empty($_GET) && !empty($_GET['message']) && isset($_GET['message'])) {
+      if (isset($_GET['message']) && !empty($_GET) && !empty($_GET['message'])) {
         $message = $_GET['message'];
         echo "<p style='color:red;'> $message </p>";
       }

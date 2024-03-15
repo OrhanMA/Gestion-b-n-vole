@@ -4,17 +4,23 @@ require_once __DIR__ . '/../../classes/Benevole.php';
 require_once __DIR__ . '/../../classes/CsvManager.php';
 
 $required_fields = array('first_name', 'last_name', 'age', 'genre', 'phone', 'email', 'region', 'dispo_jour', 'dispo_horaire', 'poste', 'message');
-$fields_empty = false;
+// check each field with regex
+$regex_array = [
+  '/^[a-zA-Z]{3,30}$/', '/^[a-zA-Z]{3,30}$/',
+  '/^(1[89]|[2-3][0-9]|4[0-5])$/',
+  '/^(homme|femme|secret)$/',
+  '/^(06|07)\d{8}$/',
+  '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+  '/^(Auvergne\-Rhône\-Alpes|Bourgogne\-Franche\-Comté|Bretagne|Centre\-Val de Loire|Corse|Grand Est|Hauts\-de\-France|Île\-de\-France|Normandie|Nouvelle\-Aquitaine|Occitanie|Pays de la Loire|Provence Alpes Côte d\'azure)$/',
+  '/^(semaine|weekend)$/',
+  '/^(matin|apres-midi|soir|nuit)$/',
+  '/^(sécurité|bar|technique|animation)$/',
+  '/^[a-zA-Z]{30,500}$/'
+];
 
-foreach ($required_fields as $field) {
-  if (empty($_POST[$field])) {
-    $fields_empty = true;
-    break; // exit if field empty
-  }
-}
+$is_fields_empty = is_there_empty_fields($required_fields, $_POST);
 
-
-if ($fields_empty) {
+if ($is_fields_empty == true) {
   // if at least on field in $_POST is empty 
   header('Location: /gestion-benevole/benevole/inscription/failure.php?message=Un des champs est vide.');
   exit;
@@ -37,13 +43,32 @@ if ($fields_empty) {
   }
 
 
-  // check each field with regex
-  $regex_array = [
-    '/^[a-zA-Z]{3,30}$/', '/^[a-zA-Z]{3,30}$/', '/^(1[89]|[2-3][0-9]|4[0-5])$/', '/^(homme|femme|secret)$/', '/^(06|07)\d{8}$/', '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', '/^(Auvergne\-Rhône\-Alpes|Bourgogne\-Franche\-Comté|Bretagne|Centre\-Val de Loire|Corse|Grand Est|Hauts\-de\-France|Île\-de\-France|Normandie|Nouvelle\-Aquitaine|Occitanie|Pays de la Loire|Provence Alpes Côte d\'azure)$/', '/^(semaine|weekend)$/', '/^(matin|apres-midi|soir|nuit)$/', '/^(sécurité|bar|technique|animation)$/', '/^[a-zA-Z]{30,500}$/'
-  ];
+  $is_fields_valid = check_all_fields_validity($form_data, $regex_array);
 
+  if (!$is_fields_valid) {
+    header('Location: /gestion-benevole/benevole/inscription/failure.php?message=Un des champs a un format non valide');
+    exit;
+  }
+
+  // Registration if user does not exist
+  $benevole = instantiate_benevole_with_form_data($form_data);
+
+  // Open the CSV file again to write the new user's data
+  $file = $csv->openCsv();
+
+  // print_r($file);
+  $csv->writeIntoCsv($file, $benevole->get_array_from_benevole());
+  $csv->closeCsv($file);
+
+  header("Location: /gestion-benevole/benevole/inscription/success.php?code=$benevole->id");
+  exit;
+}
+
+
+
+function check_all_fields_validity($form_data, $regex_array)
+{
   $all_fields_valid = true;
-
   $index = 0;
   foreach ($form_data as $key => $value) {
     $field_valid = validate_field($form_data, $key, $regex_array[$index]);
@@ -53,26 +78,8 @@ if ($fields_empty) {
     }
     $index++;
   }
-
-  if (!$all_fields_valid) {
-    header('Location: /gestion-benevole/benevole/inscription/failure.php?message=Un des champs a un format non valide');
-    exit;
-  }
-
-  // Registration if user does not exist
-  $benevole = new Benevole($form_data['first_name'], $form_data['last_name'], $form_data['age'], $form_data['genre'], $form_data['phone'], $form_data['email'], $form_data['region'], $form_data['dispo_jour'], $form_data['dispo_horaire'], $form_data['poste'], $form_data['message']);
-
-  // Open the CSV file again to write the new user's data
-  $file = $csv->openCsv();
-
-  // print_r($file);
-  $csv->writeIntoCsv($file, ['id' => $benevole->id, 'first_name' => $benevole->first_name, 'last_name' => $benevole->last_name, 'age' => $benevole->age, 'genre' => $benevole->genre, 'phone' => $benevole->phone, 'email' => $benevole->email, 'region' => $benevole->region, 'dispo_jour' => $benevole->dispo_jour, 'dispo_horaire' => $benevole->dispo_horaire, 'poste' => $benevole->poste, 'message' => $benevole->message, 'date_inscription' => $benevole->date_inscription, 'missions' => '']);
-  $csv->closeCsv($file);
-
-  header("Location: /gestion-benevole/benevole/inscription/success.php?code=$benevole->id");
-  exit;
+  return $all_fields_valid;
 }
-
 
 function validate_field($form_data, $field, $regex = null)
 {
@@ -83,4 +90,23 @@ function validate_field($form_data, $field, $regex = null)
     // perform a match with a regex, return true if there is match (field valid) and false is field does not respect the regex
     return preg_match($regex, $value);
   }
+}
+
+
+function is_there_empty_fields($required_fields)
+{
+  $fields_empty = false;
+  foreach ($required_fields as $field) {
+    if (empty($_POST[$field])) {
+      $fields_empty = true;
+      break; // exit if field empty
+    }
+  }
+  return $fields_empty;
+}
+
+
+function instantiate_benevole_with_form_data($form_data)
+{
+  return new Benevole($form_data['first_name'], $form_data['last_name'], $form_data['age'], $form_data['genre'], $form_data['phone'], $form_data['email'], $form_data['region'], $form_data['dispo_jour'], $form_data['dispo_horaire'], $form_data['poste'], $form_data['message']);
 }

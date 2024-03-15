@@ -24,5 +24,10 @@ class Benevole
     $this->missions = "";
   }
 
+  function get_array_from_benevole()
+  {
+    return ['id' => $this->id, 'first_name' => $this->first_name, 'last_name' => $this->last_name, 'age' => $this->age, 'genre' => $this->genre, 'phone' => $this->phone, 'email' => $this->email, 'region' => $this->region, 'dispo_jour' => $this->dispo_jour, 'dispo_horaire' => $this->dispo_horaire, 'poste' => $this->poste, 'message' => $this->message, 'date_inscription' => $this->date_inscription, $this->missions];
+  }
+
   // J'ai supprimé les getters et setters pour cette classe car je n'en ai pas eu besoin. Ils sont quand-même visibles dans d'anciens commit
 }

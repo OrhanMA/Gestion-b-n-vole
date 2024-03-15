@@ -13,7 +13,7 @@
   <h1>Page de connexion administrateur</h1>
 
   <?php
-  if (!empty($_GET) && !empty($_GET['message'] && isset($_GET['message']))) {
+  if (isset($_GET['message']) && !empty($_GET) && !empty($_GET['message'])) {
     $message = htmlspecialchars($_GET['message']);
     echo "<p class='error'>$message</p>";
   }

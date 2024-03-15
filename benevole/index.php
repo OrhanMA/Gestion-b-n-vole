@@ -19,7 +19,7 @@
 
 
   if (!empty($_GET)) {
-    if (!empty($_GET['code']) && isset($_GET['code'])) {
+    if (isset($_GET['code']) && !empty($_GET['code'])) {
       // si $_GET n'est pas vide et $_GET['code'] est différent de null et pas vide:
       $code = $_GET['code'];
 

@@ -22,7 +22,7 @@
       <?php
       require_once __DIR__ . './../../classes/CsvManager.php';
 
-      if (!empty($_GET) && !empty($_GET['benevole'] && isset($_GET['benevole']))) {
+      if (isset($_GET['benevole']) && !empty($_GET) && !empty($_GET['benevole'])) {
         $benevole = $_GET['benevole'];
         echo "<input hidden name='benevole' id='benevole' type='text' value='$benevole' readonly/>";
         $csv = new CsvManager('./../../csv/events.csv');
