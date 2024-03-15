@@ -13,7 +13,7 @@
   session_start();
   require_once __DIR__ . './../composants/header.php';
 
-  if (!empty($_SESSION)) {
+  if (isset($_SESSION) && !empty($_SESSION)) {
     if (isset($_SESSION['is_admin']) && !empty($_SESSION['is_admin'])) {
       $is_admin = $_SESSION['is_admin'] == 1 ? true : false;
       if ($is_admin != 1) {

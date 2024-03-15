@@ -15,7 +15,7 @@ if (!empty($_POST)) {
       header('Location: /gestion-benevole/administrateur/index.php');
       exit;
     } else {
-      $_SESSION['is_admin'] = false;
+      session_destroy();
       header("Location: /gestion-benevole/administrateur/connexion/index.php?message=Identifiants non valides. Veuillez réesayez.");
       exit;
     }
