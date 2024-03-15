@@ -21,17 +21,17 @@
       <caption>Formulaire 1/3</caption>
       <div class="form_field_container">
         <label for="first_name">Prénom</label>
-        <input required type="text" name="first_name" id="first_name" minlength="3" maxlength="30" value="David" autofocus>
+        <input required type="text" name="first_name" id="first_name" minlength="3" maxlength="30" autofocus>
         <span class="error-span" id="first_name_error"></span>
       </div>
       <div class="form_field_container">
         <label for="last_name">Nom de famille</label>
-        <input required type="text" name="last_name" id="last_name" minlength="3" maxlength="30" value="OUUIUUAIIISIS">
+        <input required type="text" name="last_name" id="last_name" minlength="3" maxlength="30">
         <span class="error-span" id="last_name_error"></span>
       </div>
       <div class="form_field_container">
         <label for="age">Âge</label>
-        <input required type="number" name="age" id="age" min="18" max="45" value="30">
+        <input required type="number" name="age" id="age" min="18" max="45" value="18">
         <span class="error-span" id="age_error"></span>
       </div>
       <div class="form_field_container">
@@ -45,12 +45,12 @@
       </div>
       <div class="form_field_container">
         <label for="phone">N° téléphone</label>
-        <input required type="tel" name="phone" id="phone" value="0623456789" pattern="^(06|07)\d{8}$">
+        <input required type="tel" name="phone" id="phone" placeholder="format français ex: 0612345679" pattern="^(06|07)\d{8}$">
         <span class="error-span" id="phone_error"></span>
       </div>
       <div class="form_field_container">
         <label for="email">Adresse email</label>
-        <input required type="email" name="email" id="email" value="test@test.com">
+        <input required type="email" name="email" id="email">
         <span class="error-span" id="email_error"></span>
       </div>
       <button class="suivant button-accent" type="button">Suivant</button>
@@ -110,7 +110,7 @@
       <caption>Formulaire 3/3</caption>
       <div class="form_field_container">
         <label for="message">Laissez un message libre</label>
-        <textarea required name="message" id="message" cols="30" rows="10" minlength="30" maxlength="500">orrboinzrbonrzobnzrobnrzobnzrobnzroibnzrobnzroinbzoinornzroinrz</textarea>
+        <textarea required name="message" id="message" cols="30" rows="10" minlength="30" maxlength="500"></textarea>
         <span class="error-span" id="message_error"></span>
         <input type="submit" class="button-accent" value="Valider mon inscription">
       </div>
