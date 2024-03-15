@@ -5,7 +5,6 @@ $admin_credentials = ['username' => 'admin', 'password' => 'admin'];
 if (!empty($_POST)) {
 
   if (isset($_POST['password']) && isset($_POST['username']) && !empty($_POST['username']) && !empty($_POST['password'])) {
-    // Si tous les champs ne sont pas vides et sont différents de null
 
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);

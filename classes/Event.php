@@ -14,6 +14,11 @@ class Event
     $this->description = $description;
   }
 
+  function get_array_from_event()
+  {
+    return ['id' => $this->id, 'region' => $this->region, 'date' => $this->date, 'titre' => $this->titre, 'description' => $this->description];
+  }
+
 
   // J'ai supprimé les getters et setters pour cette classe car je n'en ai pas eu besoin. Ils sont quand-même visibles dans d'anciens commit
 }
