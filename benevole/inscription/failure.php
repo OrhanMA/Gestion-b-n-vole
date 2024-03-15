@@ -15,7 +15,7 @@
 
   <div class="card index-nav">
     <?php
-    if (!empty($_GET['message'] && isset($_GET['message']))) {
+    if (isset($_GET['message']) && !empty($_GET['message'])) {
       $message = $_GET['message'];
       echo "<p class ='card-head'>$message</p>";
     }

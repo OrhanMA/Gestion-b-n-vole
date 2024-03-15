@@ -16,7 +16,7 @@ foreach ($required_fields as $field) {
 
 if ($fields_empty) {
   // if at least on field in $_POST is empty 
-  header('Location: /gestion-benevole/benevole/inscription/failure.php');
+  header('Location: /gestion-benevole/benevole/inscription/failure.php?message=Un des champs est vide.');
   exit;
 } else {
   $form_data = [];
@@ -42,7 +42,7 @@ if ($fields_empty) {
     '/^[a-zA-Z]{3,30}$/', '/^[a-zA-Z]{3,30}$/', '/^(1[89]|[2-3][0-9]|4[0-5])$/', '/^(homme|femme|secret)$/', '/^(06|07)\d{8}$/', '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', '/^(Auvergne\-Rhône\-Alpes|Bourgogne\-Franche\-Comté|Bretagne|Centre\-Val de Loire|Corse|Grand Est|Hauts\-de\-France|Île\-de\-France|Normandie|Nouvelle\-Aquitaine|Occitanie|Pays de la Loire|Provence Alpes Côte d\'azure)$/', '/^(semaine|weekend)$/', '/^(matin|apres-midi|soir|nuit)$/', '/^(sécurité|bar|technique|animation)$/', '/^[a-zA-Z]{30,500}$/'
   ];
 
-  $all_fields_valid = false;
+  $all_fields_valid = true;
 
   $index = 0;
   foreach ($form_data as $key => $value) {
@@ -55,7 +55,7 @@ if ($fields_empty) {
   }
 
   if (!$all_fields_valid) {
-    header('Location: /gestion-benevole/benevole/inscription/failure.php');
+    header('Location: /gestion-benevole/benevole/inscription/failure.php?message=Un des champs a un format non valide');
     exit;
   }
 
@@ -65,7 +65,7 @@ if ($fields_empty) {
   // Open the CSV file again to write the new user's data
   $file = $csv->openCsv();
 
-  print_r($file);
+  // print_r($file);
   $csv->writeIntoCsv($file, ['id' => $benevole->id, 'first_name' => $benevole->first_name, 'last_name' => $benevole->last_name, 'age' => $benevole->age, 'genre' => $benevole->genre, 'phone' => $benevole->phone, 'email' => $benevole->email, 'region' => $benevole->region, 'dispo_jour' => $benevole->dispo_jour, 'dispo_horaire' => $benevole->dispo_horaire, 'poste' => $benevole->poste, 'message' => $benevole->message, 'date_inscription' => $benevole->date_inscription, 'missions' => '']);
   $csv->closeCsv($file);
 
@@ -81,10 +81,6 @@ function validate_field($form_data, $field, $regex = null)
   } else {
     $value = $form_data[$field];
     // perform a match with a regex, return true if there is match (field valid) and false is field does not respect the regex
-    if (preg_match($regex, $value)) {
-      return true;
-    } else {
-      return false;
-    }
+    return preg_match($regex, $value);
   }
 }
